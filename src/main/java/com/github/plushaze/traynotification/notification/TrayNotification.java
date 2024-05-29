@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -23,7 +24,9 @@ import java.net.URL;
 public final class TrayNotification {
 
 	@FXML
-	private Label lblTitle, lblMessage, lblClose;
+	private Label lblTitle,lblClose;
+	@FXML
+	private TextArea TtaMessage;
 	@FXML
 	private ImageView imageIcon;
 	@FXML
@@ -238,11 +241,11 @@ public final class TrayNotification {
 	 * @param txt The text to assign to the body of the tray notification
 	 */
 	public void setMessage(String txt) {
-		lblMessage.setText(txt);
+		TtaMessage.setText(txt);
 	}
 
 	public String getMessage() {
-		return lblMessage.getText();
+		return TtaMessage.getText();
 	}
 
 	public void setImage(Image img) {

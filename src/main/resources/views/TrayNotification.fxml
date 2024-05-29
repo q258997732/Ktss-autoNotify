@@ -19,11 +19,11 @@
                 <Font name="System Bold" size="16.0"/>
             </font>
         </Label>
-        <Label fx:id="lblMessage" layoutX="126.0" layoutY="52.0" text="Message:" wrapText="true">
+        <TextArea fx:id="TtaMessage" layoutX="126.0" layoutY="36.0" prefWidth="330" prefHeight="50"  editable="false" style="-fx-background-color:transparent; -fx-border-width: 0;-fx-border-color: transparent;" text="Message:" wrapText="true">
             <font>
-                <Font size="13.0"/>
+                <Font size="13.0" />
             </font>
-        </Label>
+        </TextArea>
         <Label fx:id="lblClose" layoutX="441.0" text="x">
             <font>
                 <Font size="20.0"/>
