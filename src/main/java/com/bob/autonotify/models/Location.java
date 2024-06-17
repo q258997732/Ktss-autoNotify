@@ -1,4 +1,4 @@
-package com.github.plushaze.traynotification.models;
+package com.bob.autonotify.models;
 
 public final class Location {
 

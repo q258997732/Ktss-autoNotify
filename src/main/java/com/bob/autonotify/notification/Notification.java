@@ -1,4 +1,4 @@
-package com.github.plushaze.traynotification.notification;
+package com.bob.autonotify.notification;
 
 public interface Notification {
 

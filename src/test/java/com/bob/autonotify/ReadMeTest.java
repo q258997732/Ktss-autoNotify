@@ -1,9 +1,9 @@
-package com.github.plushaze.traynotification;
+package com.bob.autonotify;
 
-import com.github.plushaze.traynotification.animations.Animations;
-import com.github.plushaze.traynotification.notification.Notification;
-import com.github.plushaze.traynotification.notification.Notifications;
-import com.github.plushaze.traynotification.notification.TrayNotification;
+import com.bob.autonotify.animations.Animations;
+import com.bob.autonotify.notification.Notification;
+import com.bob.autonotify.notification.Notifications;
+import com.bob.autonotify.notification.TrayNotification;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.image.Image;

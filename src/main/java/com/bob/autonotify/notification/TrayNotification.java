@@ -1,6 +1,7 @@
-package com.github.plushaze.traynotification.notification;
+package com.bob.autonotify.notification;
 
-import com.github.plushaze.traynotification.animations.*;
+import com.bob.autonotify.animations.Animation;
+import com.bob.autonotify.animations.Animations;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,7 +17,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import com.github.plushaze.traynotification.models.CustomStage;
+import com.bob.autonotify.models.CustomStage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -82,7 +83,6 @@ public final class TrayNotification {
 
 	private void initTrayNotification(String title, String message, Notification type) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("views/TrayNotification.fxml"));
-
 		fxmlLoader.setController(this);
 		try {
 			fxmlLoader.load();

@@ -1,6 +1,6 @@
-package com.github.plushaze.traynotification.animations;
+package com.bob.autonotify.animations;
 
-import com.github.plushaze.traynotification.models.CustomStage;
+import com.bob.autonotify.models.CustomStage;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;

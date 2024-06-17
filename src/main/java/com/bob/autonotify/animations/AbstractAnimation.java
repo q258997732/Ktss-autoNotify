@@ -1,6 +1,6 @@
-package com.github.plushaze.traynotification.animations;
+package com.bob.autonotify.animations;
 
-import com.github.plushaze.traynotification.models.CustomStage;
+import com.bob.autonotify.models.CustomStage;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.util.Duration;

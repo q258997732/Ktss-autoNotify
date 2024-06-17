@@ -1,4 +1,4 @@
-package com.github.plushaze.traynotification.models;
+package com.bob.autonotify.models;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Rectangle2D;
@@ -8,14 +8,12 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class CustomStage extends Stage {
-
 	private final Location bottomRight;
 
 	public CustomStage(AnchorPane ap, StageStyle style) {
 		initStyle(style);
 
 		setSize(ap.getPrefWidth(), ap.getPrefHeight());
-
 		Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 		double x = screenBounds.getMinX() + screenBounds.getWidth() - ap.getPrefWidth() - 2;
 		double y = screenBounds.getMinY() + screenBounds.getHeight() - ap.getPrefHeight() - 2;
