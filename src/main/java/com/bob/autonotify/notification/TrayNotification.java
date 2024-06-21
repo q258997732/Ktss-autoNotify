@@ -150,8 +150,8 @@ public final class TrayNotification {
 		if (!isTrayShowing()) {
 			stage.show();
 
-			onShown();
-			animation.playSequential(dismissDelay);
+//			onShown();
+//			animation.playSequential(dismissDelay);
 		} else dismiss();
 
 		onDismissed();
