@@ -76,7 +76,7 @@ public class AutoNotifyAlarm {
 				ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, null, String.class);
 //				System.out.println("URL: " + url);
 				String responseBody = responseEntity.getBody();
-//				System.out.println("responseBody: " + responseBody);
+				System.out.println("responseBody:"+ responseBody);
 				ObjectMapper objectMapper = new ObjectMapper();
 				NotifyResponseEntity notifyResponseEntity = objectMapper.readValue(responseBody, NotifyResponseEntity.class);
 				List<NotifyEventEntity> entities = notifyResponseEntity.getData();
@@ -85,7 +85,7 @@ public class AutoNotifyAlarm {
 
 				// 循环弹窗
 				for (NotifyEventEntity event : entities) {
-					String message = String.format("%s %s %s", event.getUsername(), event.getxCarNumber(), event.getxAlarm());
+					String message = String.format("站点名 车牌号:%s、报警信息:%s、报警开始时间:%s、开始速度:%s",event.getXCarNumber(),event.getXAlarm(),event.getXAlarmStartTime(),event.getXStartSpeed());
 					/* 弹窗 */
 					Notification notification = Notifications.NOTICE;
 					SwingUtilities.invokeLater(() -> {

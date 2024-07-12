@@ -1,64 +1,39 @@
 package com.bob.autonotify.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+
+@Data
 public class NotifyEventEntity {
 
+	@JsonProperty("username")
 	private String username;
 
+	@JsonProperty("xCarNumber")
 	private String xCarNumber;
 
+	@JsonProperty("xAlarm")
 	private String xAlarm;
 
+	@JsonProperty("xAlarmStartTime")
 	private	String xAlarmStartTime;
 
+	@JsonProperty("id")
 	private String id;
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getxCarNumber() {
-		return xCarNumber;
-	}
-
-	public void setxCarNumber(String xCarNumber) {
-		this.xCarNumber = xCarNumber;
-	}
-
-	public String getxAlarm() {
-		return xAlarm;
-	}
-
-	public void setxAlarm(String xAlarm) {
-		this.xAlarm = xAlarm;
-	}
-
-	public String getxAlarmStartTime() {
-		return xAlarmStartTime;
-	}
-
-	public void setxAlarmStartTime(String xAlarmStartTime) {
-		this.xAlarmStartTime = xAlarmStartTime;
-	}
+	@JsonProperty("xStartSpeed")
+	private String xStartSpeed;
 
 	public NotifyEventEntity() {
 	}
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public NotifyEventEntity(String username, String xCarNumber, String xAlarm, String xAlarmStartTime) {
-		this.username = username;
+	public NotifyEventEntity(String xCarNumber, String username, String xAlarm, String xAlarmStartTime, String id, String xStartSpeed) {
 		this.xCarNumber = xCarNumber;
+		this.username = username;
 		this.xAlarm = xAlarm;
 		this.xAlarmStartTime = xAlarmStartTime;
+		this.id = id;
+		this.xStartSpeed = xStartSpeed;
 	}
+
 }

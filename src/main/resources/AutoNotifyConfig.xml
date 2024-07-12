@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
 	<API>
-		<HOST>111.230.199.118</HOST>
-		<PORT>80</PORT>
-		<USER>陕西盛世腾辉客运有限公司</USER>
+		<HOST>10.11.2.115</HOST>
+		<PORT>18882</PORT>
+		<USER>古韵旅游</USER>
 		<TOKEN>test</TOKEN>
 	</API>
 	<NOTIFY>
