@@ -74,7 +74,9 @@ public class AutoNotifyAlarm {
 
 				// 发送POST请求并接收响应
 				ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, null, String.class);
+//				System.out.println("URL: " + url);
 				String responseBody = responseEntity.getBody();
+//				System.out.println("responseBody: " + responseBody);
 				ObjectMapper objectMapper = new ObjectMapper();
 				NotifyResponseEntity notifyResponseEntity = objectMapper.readValue(responseBody, NotifyResponseEntity.class);
 				List<NotifyEventEntity> entities = notifyResponseEntity.getData();

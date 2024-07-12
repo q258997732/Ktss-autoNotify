@@ -10,6 +10,8 @@ public class NotifyEventEntity {
 
 	private	String xAlarmStartTime;
 
+	private String id;
+
 	public String getUsername() {
 		return username;
 	}
@@ -43,6 +45,14 @@ public class NotifyEventEntity {
 	}
 
 	public NotifyEventEntity() {
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public NotifyEventEntity(String username, String xCarNumber, String xAlarm, String xAlarmStartTime) {
