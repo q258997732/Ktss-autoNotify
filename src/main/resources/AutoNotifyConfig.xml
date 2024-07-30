@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
 	<API>
-		<HOST>10.11.2.115</HOST>
-		<PORT>18882</PORT>
-		<USER>古韵旅游</USER>
+		<HOST>111.230.199.118</HOST>
+		<PORT>80</PORT>
+		<USER>翔瑞</USER>
 		<TOKEN>test</TOKEN>
 	</API>
 	<NOTIFY>
-		<TITLE>K-TSS报警通知</TITLE>
+		<TITLE>动态监控报警通知</TITLE>
 	</NOTIFY>
 	<ASTATUS>on</ASTATUS>
 </Configuration>

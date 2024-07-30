@@ -36,4 +36,8 @@ public class NotifyEventEntity {
 		this.xStartSpeed = xStartSpeed;
 	}
 
+	public String toString() {
+		return String.format("%s 车牌号:%s、报警信息:%s、报警开始时间:%s、开始速度:%s",getUsername(), getXCarNumber(), getXAlarm(), getXAlarmStartTime(), getXStartSpeed());
+	}
+
 }
