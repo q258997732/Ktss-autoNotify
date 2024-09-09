@@ -1,7 +1,12 @@
 package com.bob.autonotify.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
+
 import java.util.List;
 
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class NotifyResponseEntity  {
 
 	private String code;
@@ -19,24 +24,12 @@ public class NotifyResponseEntity  {
 		this.data = data;
 	}
 
-	public String getCode() {
-		return code;
-	}
-
 	public void setCode(String code) {
 		this.code = code;
 	}
 
-	public String getMessage() {
-		return message;
-	}
-
 	public void setMessage(String message) {
 		this.message = message;
-	}
-
-	public List<NotifyEventEntity> getData() {
-		return data;
 	}
 
 	public void setData(List<NotifyEventEntity> data) {

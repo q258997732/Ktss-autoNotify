@@ -1,0 +1,5 @@
+修改弹窗样式：TrayNotification.fxml
+程序启动入口：AutoNotifyAlarm
+青松接口调用：KpineUtil
+语音播报内容：NotifySchedule -> speechTask
+maven打包命令：控制台输入mvn clean（清除） mvn install（打包）

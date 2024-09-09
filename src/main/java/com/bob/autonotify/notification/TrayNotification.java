@@ -2,12 +2,16 @@ package com.bob.autonotify.notification;
 
 import com.bob.autonotify.animations.Animation;
 import com.bob.autonotify.animations.Animations;
+import com.bob.autonotify.models.CustomStage;
+import com.bob.autonotify.util.KpineUtil;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -15,17 +19,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Screen;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import com.bob.autonotify.models.CustomStage;
+import lombok.Getter;
+import lombok.Setter;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.URL;
 
 public final class TrayNotification {
 
 	@FXML
-	private Label lblTitle,lblClose;
+	private Label lblTitle, lblClose;
 	@FXML
 	private TextArea TtaMessage;
 	@FXML
@@ -34,11 +42,18 @@ public final class TrayNotification {
 	private Rectangle rectangleColor;
 	@FXML
 	private AnchorPane rootNode;
+	@FXML
+	private Button btnConfirm, btnIgnore;
+
 
 	private CustomStage stage;
 	private Notification notification;
 	private Animation animation;
 	private EventHandler<ActionEvent> onDismissedCallBack, onShownCallback;
+
+	@Getter
+	@Setter
+	private String eventId;
 
 	/**
 	 * Initializes an instance of the tray notification object
@@ -49,7 +64,7 @@ public final class TrayNotification {
 	 * @param rectangleFill The fill for the rectangle
 	 */
 	public TrayNotification(String title, String body, Image img,
-	                        Paint rectangleFill, Notification notification) {
+							Paint rectangleFill, Notification notification) {
 		initTrayNotification(title, body, notification);
 
 		setImage(img);
@@ -105,9 +120,42 @@ public final class TrayNotification {
 		stage = new CustomStage(rootNode, StageStyle.UNDECORATED);
 		stage.setScene(new Scene(rootNode));
 		stage.setAlwaysOnTop(true);
-		stage.setLocation(stage.getBottomRight());
 
-		lblClose.setOnMouseClicked(e -> dismiss());
+		/* 修改窗口显示初始位置 */
+//		stage.setLocation(stage.getBottomRight());
+
+		/* 设置窗体在屏幕绝对居中 */
+//		stage.centerOnScreen();
+
+		// 获取窗体大小
+		double initialWidth = rootNode.getPrefWidth();
+		double initialHeight = rootNode.getPrefHeight();
+//		System.out.println("initialWidth:"+initialWidth+" initialHeight:"+initialHeight);
+
+		/* 计算屏幕中心点桌标 */
+		Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
+		double screenCenterX = visualBounds.getWidth() / 2;
+		double screenCenterY = visualBounds.getHeight() / 2;
+//		System.out.println("screenCenterX:"+screenCenterX+" screenCenterY:"+screenCenterY);
+
+		// 计算舞台的起始坐标
+		double stageX = screenCenterX - initialWidth / 2;
+		double stageY = screenCenterY - initialHeight / 2;
+//		System.out.println("stageX:"+stageX+" stageY:"+stageY);
+
+		// 设置舞台的位置
+		stage.setX(stageX);
+		stage.setY(stageY);
+
+
+		// 设置按钮动作
+		btnConfirm.setOnMouseClicked(e -> confirm());
+		btnIgnore.setOnMouseClicked(e -> ignore());
+//		lblClose.setOnMouseClicked(e -> dismiss());
+	}
+
+	public Notification getNotification() {
+		return notification;
 	}
 
 	public void setNotification(Notification nType) {
@@ -117,10 +165,6 @@ public final class TrayNotification {
 		setRectangleFill(Paint.valueOf(nType.getPaintHex()));
 		setImage(new Image(imageLocation.toString()));
 		setTrayIcon(imageIcon.getImage());
-	}
-
-	public Notification getNotification() {
-		return notification;
 	}
 
 	public void setTray(String title, String message, Notification type) {
@@ -180,6 +224,43 @@ public final class TrayNotification {
 		}
 	}
 
+	public void closeStage(){
+		stage.close();
+	}
+
+	/**
+	 * 点击确认已处理按钮动作
+	 */
+	public void confirm() {
+		try {
+			boolean result = KpineUtil.resolveMonitorEvent(eventId, "1");
+			if (result) {
+				System.out.printf("事件:%s 确认已处理%n", eventId);
+			} else {
+				System.out.printf("事件:%s 确认处理失败%n", eventId);
+			}
+		} catch (IOException | SAXException | ParserConfigurationException e) {
+			e.printStackTrace();
+		} finally {
+			closeStage();
+		}
+	}
+
+	public void ignore() {
+		try {
+			boolean result = KpineUtil.resolveMonitorEvent(eventId, "2");
+			if (result) {
+				System.out.printf("事件:%s 已忽略%n", eventId);
+			} else {
+				System.out.printf("事件:%s 忽略失败%n", eventId);
+			}
+		} catch (IOException | SAXException | ParserConfigurationException e) {
+			e.printStackTrace();
+		} finally {
+			closeStage();
+		}
+	}
+
 	private void onShown() {
 		if (onShownCallback != null)
 			onShownCallback.handle(new ActionEvent());
@@ -208,6 +289,10 @@ public final class TrayNotification {
 		onShownCallback = event;
 	}
 
+	public Image getTrayIcon() {
+		return stage.getIcons().get(0);
+	}
+
 	/**
 	 * Sets a new task bar image for the tray
 	 *
@@ -218,8 +303,8 @@ public final class TrayNotification {
 		stage.getIcons().add(img);
 	}
 
-	public Image getTrayIcon() {
-		return stage.getIcons().get(0);
+	public String getTitle() {
+		return lblTitle.getText();
 	}
 
 	/**
@@ -231,8 +316,8 @@ public final class TrayNotification {
 		Platform.runLater(() -> lblTitle.setText(txt));
 	}
 
-	public String getTitle() {
-		return lblTitle.getText();
+	public String getMessage() {
+		return TtaMessage.getText();
 	}
 
 	/**
@@ -244,8 +329,8 @@ public final class TrayNotification {
 		TtaMessage.setText(txt);
 	}
 
-	public String getMessage() {
-		return TtaMessage.getText();
+	public Image getImage() {
+		return imageIcon.getImage();
 	}
 
 	public void setImage(Image img) {
@@ -254,16 +339,16 @@ public final class TrayNotification {
 		setTrayIcon(img);
 	}
 
-	public Image getImage() {
-		return imageIcon.getImage();
+	public Paint getRectangleFill() {
+		return rectangleColor.getFill();
 	}
 
 	public void setRectangleFill(Paint value) {
 		rectangleColor.setFill(value);
 	}
 
-	public Paint getRectangleFill() {
-		return rectangleColor.getFill();
+	public Animation getAnimation() {
+		return animation;
 	}
 
 	public void setAnimation(Animation animation) {
@@ -272,10 +357,6 @@ public final class TrayNotification {
 
 	public void setAnimation(Animations animation) {
 		setAnimation(animation.newInstance(stage));
-	}
-
-	public Animation getAnimation() {
-		return animation;
 	}
 
 }

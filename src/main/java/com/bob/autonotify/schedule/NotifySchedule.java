@@ -13,8 +13,11 @@ import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.xml.sax.SAXException;
 
 import javax.swing.*;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -49,15 +52,15 @@ public class NotifySchedule {
 					List<NotifyEventEntity> tmpList = KpineUtil.getNotifyEventList();
 					trayNotifyList.addAll(tmpList);
 					speechNotifyList.addAll(tmpList);
-					if(tmpTrayNotifyList.isEmpty()){
+					if (tmpTrayNotifyList.isEmpty()) {
 						tmpTrayNotifyList.addAll(trayNotifyList);
 						trayNotifyList.clear();
 					}
-					if(tmpSpeechNotifyList.isEmpty()){
+					if (tmpSpeechNotifyList.isEmpty()) {
 						tmpSpeechNotifyList.addAll(speechNotifyList);
 						speechNotifyList.clear();
 					}
-					System.out.printf("同步事件任务 语音队列:%s 弹窗队列:%s%n",speechNotifyList.size(),trayNotifyList.size());
+					System.out.printf("同步事件任务 语音队列:%s 弹窗队列:%s%n", speechNotifyList.size(), trayNotifyList.size());
 //					System.out.printf("临时语音队列:%s 临时弹窗队列:%s%n",tmpSpeechNotifyList.size(),tmpTrayNotifyList.size());
 				} catch (Exception e) {
 					LOGGER.error("获取报警清单失败{}", e.getMessage());
@@ -69,8 +72,13 @@ public class NotifySchedule {
 		scheduler.schedule(getNotifyTask, getNotifyListInitialDelay, TimeUnit.MILLISECONDS);
 	}
 
+	/**
+	 * 语音播报任务
+	 * @param initialDelay
+	 * @param delay
+	 */
 	public void speechTask(long initialDelay, long delay) {
-		scheduler.setMaximumPoolSize(maxPoolSize/2);
+		scheduler.setMaximumPoolSize(maxPoolSize / 2);
 		System.out.println("启动语音Schedule.");
 		// 创建ActiveXComponent实例
 		ActiveXComponent activeXComponent = new ActiveXComponent("Sapi.SpVoice");
@@ -83,7 +91,7 @@ public class NotifySchedule {
 					while (iterator.hasNext()) {
 						NotifyEventEntity notifyEventEntity = iterator.next();
 						Dispatch.call(spVoice, "Speak", new Variant(notifyEventEntity.toString()));
-						System.out.println("语音播报:"+notifyEventEntity.toString());
+						System.out.println("语音播报:" + notifyEventEntity.toString());
 						iterator.remove();
 					}
 				}
@@ -93,8 +101,13 @@ public class NotifySchedule {
 		scheduler.schedule(speechEventTask, delay, TimeUnit.MILLISECONDS);
 	}
 
+	/**
+	 * 弹窗任务
+	 * @param initialDelay
+	 * @param delay
+	 */
 	public void trayTask(long initialDelay, long delay) {
-		scheduler.setMaximumPoolSize(maxPoolSize/2);
+		scheduler.setMaximumPoolSize(maxPoolSize / 2);
 		System.out.println("启动弹窗Schedule.");
 		tmpTrayNotifyList.addAll(trayNotifyList);
 		Runnable trayEventTask = new Runnable() {
@@ -119,15 +132,26 @@ public class NotifySchedule {
 							throw new RuntimeException(e);
 						}
 
+						// 关闭隐式退出-很重要
+						Platform.setImplicitExit(false);
 						Platform.runLater(() -> {
 							TrayNotification tray = new TrayNotification();
+							tray.setEventId(notifyEventEntity.getId());
 							tray.setTitle(title);
 							tray.setMessage(notifyEventEntity.toString());
 							tray.setNotification(notification);
-							tray.setAnimation(Animations.POPUP);
+							tray.setAnimation(Animations.FADE);
 //						tray.showAndDismiss(Duration.seconds(5));
 							tray.showAndWait();
-							System.out.println("报警弹窗:"+notifyEventEntity.toString());
+							try {
+								if (KpineUtil.insertMonitorEvent(notifyEventEntity.getId(), KpineUtil.getConfig().get("apiUser").toString()) > 0) {
+									System.out.println("写入监控员事件表成功:" + notifyEventEntity.toString());
+								} else {
+									System.out.println("写入监控员事件表失败:" + notifyEventEntity.toString());
+								}
+							} catch (IOException | ParserConfigurationException | SAXException e) {
+								throw new RuntimeException(e);
+							}
 						});
 						// 弹窗间隔事件
 						try {

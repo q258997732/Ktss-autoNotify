@@ -1,36 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import java.lang.String?>
+<?import java.net.URL?>
 <AnchorPane fx:id="rootNode" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="130.0" prefWidth="461.0" style="-fx-border-color: gray; -fx-border-width: 1;"
+            prefHeight="294.0" prefWidth="500.0" style="-fx-border-color: gray; -fx-border-width: 1;"
             xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Rectangle fx:id="rectangleColor" arcHeight="5.0" arcWidth="5.0" fill="GREY" height="85.0" layoutX="1.0"
+        <Rectangle fx:id="rectangleColor" arcHeight="5.0" arcWidth="5.0" fill="GREY" height="300.0" layoutX="1.0"
                    layoutY="1.0" stroke="GREY" strokeType="INSIDE" style="-fx-arc-width: 0;" width="32.0"/>
-        <ImageView fx:id="imageIcon" fitHeight="67.0" fitWidth="67.0" layoutX="47.0" layoutY="9.0" pickOnBounds="true"/>
-        <Label fx:id="lblTitle" layoutX="126.0" layoutY="9.0" text="Title:" wrapText="true">
+        <ImageView  fx:id="imageIcon" fitHeight="30.0" fitWidth="30.0" layoutX="37.0" layoutY="9.0" pickOnBounds="true"/>
+        <Label fx:id="lblTitle" layoutX="74.0" layoutY="11.0" text="Title:" wrapText="true">
             <font>
-                <Font name="System Bold" size="16.0"/>
+                <Font name="Dialog" size="20.0"/>
             </font>
         </Label>
-        <TextArea fx:id="TtaMessage" layoutX="126.0" layoutY="36.0" prefWidth="330" prefHeight="89.0"  editable="false" style="-fx-background-color:transparent; -fx-border-width: 0;-fx-border-color: transparent;" text="Message:" wrapText="true">
+        <Label layoutX="50.0" layoutY="245.0" text="请在15分钟内进行处理" wrapText="true" styleClass="notify-label">
             <font>
-                <Font size="13.0" />
+                <Font name="System"/>
             </font>
+        </Label>
+        <TextArea fx:id="TtaMessage" layoutX="44.0" layoutY="43.0" prefWidth="444" prefHeight="200.0"
+                  editable="false" text="Message:" wrapText="true">
+            <font>
+                <Font name="System" size="16.0" />
+            </font>
+            <!-- CSS样式类 -->
+            <styleClass>
+                <String fx:value="text-area-as-label"/>
+            </styleClass>
         </TextArea>
-        <Label fx:id="lblClose" layoutX="441.0" text="x">
-            <font>
-                <Font size="20.0"/>
-            </font>
-            <cursor>
-                <Cursor fx:constant="HAND"/>
-            </cursor>
-        </Label>
+<!--        <Label fx:id="lblClose" layoutX="480.0" text="X">-->
+<!--            <font>-->
+<!--                <Font size="20.0"/>-->
+<!--            </font>-->
+<!--            <cursor>-->
+<!--                <Cursor fx:constant="HAND"/>-->
+<!--            </cursor>-->
+<!--        </Label>-->
+        <!-- 添加按钮 -->
+
+        <HBox alignment="CENTER_RIGHT" spacing="10" layoutY="120" AnchorPane.bottomAnchor="12.0" AnchorPane.rightAnchor="20.0">
+            <Button fx:id="btnConfirm" text="确认已处理" styleClass="dialog-button" />
+            <Button fx:id="btnIgnore" text="忽略" styleClass="dialog-button" />
+        </HBox>
     </children>
+    <stylesheets>
+        <URL value="@/css/jfxBtn.css"/> <!-- 引入外部样式文件 -->
+    </stylesheets>
 </AnchorPane>

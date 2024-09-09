@@ -22,7 +22,8 @@ final class FadeAnimation extends AbstractAnimation {
 
 		// Sets opacity to 1.0 (fully visible) over the time of 3000 milliseconds.
 		KeyValue kvOpacity2 = new KeyValue(stage.opacityProperty(), 1.0);
-		KeyFrame frame2 = new KeyFrame(Duration.millis(3000), kvOpacity2);
+//		KeyFrame frame2 = new KeyFrame(Duration.millis(3000), kvOpacity2);
+		KeyFrame frame2 = new KeyFrame(Duration.millis(0), kvOpacity2);
 
 		tl.getKeyFrames().addAll(frame1, frame2);
 
@@ -38,19 +39,20 @@ final class FadeAnimation extends AbstractAnimation {
 		// At this stage the opacity is already at 1.0
 
 		// Lowers the opacity to 0.0 within 2000 milliseconds
-		KeyValue kv1 = new KeyValue(stage.opacityProperty(), 0.0);
-		KeyFrame kf1 = new KeyFrame(Duration.millis(2000), kv1);
+//		KeyValue kv1 = new KeyValue(stage.opacityProperty(), 0.0);
+//		KeyFrame kf1 = new KeyFrame(Duration.millis(2000), kv1);
+//		KeyFrame kf1 = new KeyFrame(Duration.millis(0), kv1);
 
-		tl.getKeyFrames().addAll(kf1);
+//		tl.getKeyFrames().addAll(kf1);
 
 		// Action to be performed when the animation has finished
 		tl.setOnFinished(e -> {
 			trayIsShowing = false;
 			stage.close();
-			stage.setLocation(stage.getBottomRight());
+//			stage.setLocation(stage.getBottomRight());
 		});
-
 		return tl;
 	}
+
 
 }

@@ -24,7 +24,7 @@
       </Label>
       <Label fx:id="lblMessage" layoutX="126.0" layoutY="52.0" text="Message:" wrapText="true">
          <font>
-            <Font size="13.0" />
+            <Font size="15.0" />
          </font>
       </Label>
       <Label fx:id="lblClose" layoutX="441.0" text="x">

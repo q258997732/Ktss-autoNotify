@@ -1,0 +1,28 @@
+.dialog-button {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #333333;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 8 15 8 15;
+}
+
+.dialog-button:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.text-area-as-label {
+    -fx-background-color: transparent;
+    /*-fx-control-inner-background: rgba(18, 246, 215, 0.81);*/
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-text-fill: black; /* 根据需要设置文本颜色 */
+    -fx-padding: 5px; /* 设置内边距 */
+    /*-fx-line-spacing: 10px; !* 设置行间距 *!*/
+}
+
+.notify-label{
+    -fx-text-fill: #FF0000;
+    -fx-font-size: 18px;
+}
+
