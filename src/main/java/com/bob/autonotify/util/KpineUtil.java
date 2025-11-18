@@ -77,7 +77,14 @@ public class KpineUtil {
 		String responseBody = responseEntity.getBody();
 //		System.out.println("responseBody:" + responseBody);
 		ObjectMapper objectMapper = new ObjectMapper();
-		NotifyResponseEntity notifyResponseEntity = objectMapper.readValue(responseBody, NotifyResponseEntity.class);
+		// 如果返回非合法Json格式，则跳过本次执行
+		NotifyResponseEntity notifyResponseEntity = null;
+		try {
+			notifyResponseEntity = objectMapper.readValue(responseBody, NotifyResponseEntity.class);
+		} catch (Exception e) {
+			System.out.println("返回非合法Json格式，请检查接口返回数据");
+			return null;
+		}
 
 //		System.out.println(new Date() + " 通知事件数:" + entities.size());
 
